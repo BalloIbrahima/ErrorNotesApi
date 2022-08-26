@@ -1,6 +1,6 @@
 package com.errornotes.ErrorNotesApi.servicesImplementation;
 
-import com.errornotes.ErrorNotesApi.services.SolutionService;
+import com.errornotes.ErrorNotesApi.repository.services.SolutionService;
 
 public class SolutionServiceImpl implements SolutionService {
 }
