@@ -5,9 +5,11 @@ import com.errornotes.ErrorNotesApi.models.User;
 import com.errornotes.ErrorNotesApi.repository.RoleRepository;
 import com.errornotes.ErrorNotesApi.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
@@ -26,11 +28,18 @@ public class RoleServiceImpl implements RoleService {
     public Role ModifierRole(Long id, User user) {
         return null;
     }
+    public Role ModifierRole(Long id, Role role) {
+        return roleRepository.findById(id)
+                .map(p->{
+                    p.setLibelle(role.getLibelle());
+                    return roleRepository.save(p);
+                }).orElseThrow(()-> new RuntimeException("Role non trouvé !"));
+    }
 
     @Override
     public String supprimerRole(Long id) {
         roleRepository.deleteById(id);
-        return "User supprimé";
+        return "Role supprimé";
     }
 
     @Override

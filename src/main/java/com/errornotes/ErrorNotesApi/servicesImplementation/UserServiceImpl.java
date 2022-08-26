@@ -4,9 +4,11 @@ import com.errornotes.ErrorNotesApi.models.User;
 import com.errornotes.ErrorNotesApi.repository.UserRepository;
 import com.errornotes.ErrorNotesApi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -38,5 +40,10 @@ public class UserServiceImpl implements UserService {
     public String supprimerUser(long id) {
         userRepository.deleteById(id);
         return "User supprimé";
+    }
+
+    @Override
+    public User getEmailUser(String email) {
+        return userRepository.findByEmail(email);
     }
 }
