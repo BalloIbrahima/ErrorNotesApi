@@ -16,7 +16,7 @@ public class User {
     Long id;
     String nom;
     String prenom;
-    String numero;
+    Long numero;
     String email;
     String password;
 
