@@ -1,12 +1,12 @@
 package com.errornotes.ErrorNotesApi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.ValueGenerationType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,4 +17,7 @@ public class Role {
     Long id;
     String libelle;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "role")
+    List<User> listUser = new ArrayList<>();
 }
