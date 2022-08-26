@@ -1,4 +1,4 @@
-package com.errornotes.ErrorNotesApi.repository.services;
+package com.errornotes.ErrorNotesApi.services;
 
 import org.springframework.stereotype.Service;
 
