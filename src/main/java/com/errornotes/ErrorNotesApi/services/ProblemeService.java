@@ -26,4 +26,7 @@ public interface ProblemeService {
 
     // retrouver probleme par id
     Probleme retrouverParId(Long id);
+
+    // recherche par mots clé
+    List<Probleme> recherche(String mot);
 }
