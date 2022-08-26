@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProblemeRepository extends JpaRepository<Probleme, Long> {
+    Probleme findByTitre(String titre);
 }
