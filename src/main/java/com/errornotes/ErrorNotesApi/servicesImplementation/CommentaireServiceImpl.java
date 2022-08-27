@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.errornotes.ErrorNotesApi.models.Commentaire;
 import com.errornotes.ErrorNotesApi.models.Solution;
 import com.errornotes.ErrorNotesApi.repository.CommentaireRepository;
-import com.errornotes.ErrorNotesApi.services.CommentaireService;
 
 @Service
 public class CommentaireServiceImpl implements CommentaireService {

@@ -6,14 +6,24 @@ import com.errornotes.ErrorNotesApi.models.User;
 import java.util.List;
 
 public interface UserService {
-    //fonction creer user
-    User creerUser (User user);
-    //Fonction lister
+    // fonction creer user
+    User creerUser(User user);
+
+    // Fonction lister
     List<User> listerUser();
-    //Fonction modifier
+
+    // Fonction modifier
     User modifierUser(Long id, User user);
-    //Fonction supprimer
+
+    // Fonction supprimer
     String supprimerUser(long id);
+
     User getEmailUser(String eamil);
+
+    User Login(String email, String password);
+
+    List<User> recupererParRole(Role role);
+
+    User RecupererParId(Long id);
 
 }

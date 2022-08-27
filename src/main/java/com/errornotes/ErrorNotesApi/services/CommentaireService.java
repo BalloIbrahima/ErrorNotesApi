@@ -2,12 +2,10 @@ package com.errornotes.ErrorNotesApi.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.errornotes.ErrorNotesApi.models.Commentaire;
 import com.errornotes.ErrorNotesApi.models.Solution;
-import com.errornotes.ErrorNotesApi.repository.CommentaireRepository;
 
 @Service
 public interface CommentaireService {
