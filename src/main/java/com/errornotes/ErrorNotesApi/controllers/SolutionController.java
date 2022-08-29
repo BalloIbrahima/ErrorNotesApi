@@ -1,15 +1,15 @@
 package com.errornotes.ErrorNotesApi.controllers;
 
 import com.errornotes.ErrorNotesApi.models.Probleme;
-import com.errornotes.ErrorNotesApi.models.Role;
 import com.errornotes.ErrorNotesApi.models.Solution;
-import com.errornotes.ErrorNotesApi.models.User;
 import com.errornotes.ErrorNotesApi.services.ProblemeService;
 import com.errornotes.ErrorNotesApi.services.SolutionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(value = "Solution", description = "Pour la gestion d'un solution")
 @RestController
@@ -32,7 +32,6 @@ public class SolutionController {
 
         if (s == null) {
             if (probleme != null) {
-                // role.getListUser().add(user);
                 solution.setProbleme(probleme);
                 return solutionService.createSolution(solution);
             } else {
@@ -41,7 +40,6 @@ public class SolutionController {
         } else {
             return "Cette solution existe déja!!";
         }
-
     }
 
 
@@ -52,10 +50,18 @@ public class SolutionController {
         return solutionService.modificationSolution(id, solution);
     }
 
+//a fonction de suprression
     @ApiOperation(value = "Supression d'une solution")
     @DeleteMapping("/delete/{id}")
     public void delete(@RequestBody Solution solution) {
         solutionService.deleteSolution(solution);
+    }
+
+    //La fonction pour lister
+    @ApiOperation(value = "Lister les solutions")
+    @GetMapping("/read")
+    public List<Solution> read(){
+        return solutionService.getAllSolution();
     }
 
 
