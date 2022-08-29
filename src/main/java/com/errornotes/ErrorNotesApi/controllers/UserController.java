@@ -1,5 +1,6 @@
 package com.errornotes.ErrorNotesApi.controllers;
 
+import com.errornotes.ErrorNotesApi.configuration.ResponseMessage;
 import com.errornotes.ErrorNotesApi.models.Role;
 import com.errornotes.ErrorNotesApi.models.User;
 import com.errornotes.ErrorNotesApi.services.RoleService;
@@ -7,6 +8,8 @@ import com.errornotes.ErrorNotesApi.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,6 +64,20 @@ public class UserController {
 
         // recuperation des users avec ce role
         return userService.recupererParRole(role);
+    }
+
+    @ApiOperation(value = "Connexion d'un utilisateur ou d'un admin")
+    @GetMapping("/login/{email}/{password}")
+    public ResponseEntity<Object> read(@PathVariable(value = "email") String email,
+            @PathVariable(value = "password") String password) {
+
+        User user = userService.Login(email, password);
+
+        if (user != null) {
+            return ResponseMessage.generateResponse("Ok", HttpStatus.OK, user);
+        } else {
+            return ResponseMessage.generateResponse("Email ou Mot de passe incorrect !", HttpStatus.NOT_FOUND, null);
+        }
     }
 
 }
