@@ -29,7 +29,7 @@ public class Commentaire {
     @ManyToOne
     Solution solution;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Commentaire commentaire;
 
     @JsonIgnore

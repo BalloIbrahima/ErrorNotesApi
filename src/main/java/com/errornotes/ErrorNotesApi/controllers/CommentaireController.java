@@ -1,19 +1,26 @@
 package com.errornotes.ErrorNotesApi.controllers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.errornotes.ErrorNotesApi.configuration.ResponseMessage;
 import com.errornotes.ErrorNotesApi.models.Commentaire;
-import com.errornotes.ErrorNotesApi.models.Solution;
+import com.errornotes.ErrorNotesApi.models.Probleme;
 import com.errornotes.ErrorNotesApi.models.User;
 import com.errornotes.ErrorNotesApi.services.CommentaireService;
-import com.errornotes.ErrorNotesApi.services.SolutionService;
+import com.errornotes.ErrorNotesApi.services.ProblemeService;
 import com.errornotes.ErrorNotesApi.services.UserService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@Api(value = "commentaire", description = "Pour la gestion d'un commentaire")
+@Api(value = "commentaire", description = "Pour la gestion des commentaires")
 @RestController
 @RequestMapping("/commentaire")
 public class CommentaireController {
@@ -24,29 +31,28 @@ public class CommentaireController {
     UserService userService;
 
     @Autowired
-    SolutionService solutionService;
+    ProblemeService problemeService;
 
     //La fonction de creation
     @ApiOperation(value = "Pour la création d'un commentaire")
-    @PostMapping("/create/{idUser}/{idSolution}")
-    public Object create(@RequestBody Commentaire commentaire, @PathVariable ("idUser") Long idUser, @PathVariable
-            ("idSolution") Long idSolution){
-
+    @PostMapping(value = "add/{idUser}/{idProblème}")
+    public ResponseEntity<Object> AddCommentaire(@RequestBody Commentaire commentaire,
+            @PathVariable(value = "idUser") Long idUser, @PathVariable(value = "idProbleme") Long idProbleme) {
+        // TODO: process POST request
         User user = userService.RecupererParId(idUser);
-        Solution solution = solutionService.retrouverParId(idSolution);
-        //Commentaire c = commentaireService.retrouverParCommentaire(commentaire.getCommentaire());
+        Probleme probleme = problemeService.retrouverParId(idProbleme);
 
-            if (user != null && solution != null){
-                commentaire.setUser(user);
-                commentaire.setSolution(solution);
-                //commentaire.setCommentaire(commentaire);
-                return commentaireService.createCommentaire(commentaire);
-            }else{
-                return "Le user ou le probleme, n'existe pas";
-            }
+        if (user != null) {
+            commentaire.setUser(user);
+            return ResponseMessage.generateResponse("Ok", HttpStatus.OK,
+                    commentaireService.createCommentaire(commentaire));
+        } else {
+            return ResponseMessage.generateResponse("Ok", HttpStatus.NOT_FOUND,
+                    "Utilisateur ou problème inexistant !");
+        }
 
-    }
-
+    }    
+    
     //La fonction de modifier
     @ApiOperation(value = "Pour la modifier d'un commentaire")
     @PutMapping("/update/{idUser}/{idProbleme}/{idCommentaire}")
@@ -66,6 +72,5 @@ public class CommentaireController {
     public void delete(Commentaire commentaire){
         commentaireService.deleteCommentaire(commentaire);
     }
-
+    
 }
-

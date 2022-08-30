@@ -30,6 +30,6 @@ public class Solution {
     @OneToMany(mappedBy = "solution")
     List<Commentaire> commentaireList = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(mappedBy = "solution")
     Probleme probleme;
 }
