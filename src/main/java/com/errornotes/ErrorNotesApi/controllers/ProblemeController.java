@@ -26,6 +26,8 @@ import com.errornotes.ErrorNotesApi.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
+
 @Api(value = "probleme", description = "Pour la gestion d'un problème")
 @RequestMapping("/probleme")
 @Controller
@@ -123,5 +125,13 @@ public class ProblemeController {
         }
 
     }
+
+    @ApiOperation(value = "Pour la voir les problèmes")
+    @GetMapping("/read")
+    public List<Probleme> getAllProbleme(@RequestBody Probleme probleme){
+        return problemeService.getAllProbleme();
+    }
+
+
 
 }
