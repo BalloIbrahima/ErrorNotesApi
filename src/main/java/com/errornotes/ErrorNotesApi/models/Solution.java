@@ -1,18 +1,25 @@
 package com.errornotes.ErrorNotesApi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Solution {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String description;
     String ressources;
@@ -23,6 +30,6 @@ public class Solution {
     @OneToMany(mappedBy = "solution")
     List<Commentaire> commentaireList = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(mappedBy = "solution")
     Probleme probleme;
 }

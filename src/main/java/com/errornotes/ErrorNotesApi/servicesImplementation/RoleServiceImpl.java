@@ -14,6 +14,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     RoleRepository roleRepository;
+
     @Override
     public Role creerRole(Role role) {
         return roleRepository.save(role);
@@ -28,12 +29,13 @@ public class RoleServiceImpl implements RoleService {
     public Role ModifierRole(Long id, User user) {
         return null;
     }
+
     public Role ModifierRole(Long id, Role role) {
         return roleRepository.findById(id)
-                .map(p->{
+                .map(p -> {
                     p.setLibelle(role.getLibelle());
                     return roleRepository.save(p);
-                }).orElseThrow(()-> new RuntimeException("Role non trouvé !"));
+                }).orElseThrow(() -> new RuntimeException("Role non trouvé !"));
     }
 
     @Override
@@ -45,5 +47,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getLibelleRole(String libelle) {
         return roleRepository.findByLibelle(libelle);
+    }
+
+    @Override
+    public Role getRoleParId(Long id) {
+        // TODO Auto-generated method stub
+        return roleRepository.findById(id).get();
     }
 }

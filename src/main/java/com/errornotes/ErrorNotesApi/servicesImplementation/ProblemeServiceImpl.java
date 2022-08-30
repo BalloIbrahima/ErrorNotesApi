@@ -54,6 +54,6 @@ public class ProblemeServiceImpl implements ProblemeService {
     @Override
     public List<Probleme> recherche(String mot) {
         // TODO Auto-generated method stub
-        return repos.recherche(mot);
+        return repos.findByTitreContaining(mot);
     }
 }
