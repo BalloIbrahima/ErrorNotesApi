@@ -30,6 +30,7 @@ public class Solution {
     @OneToMany(mappedBy = "solution")
     List<Commentaire> commentaireList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "solution")
+    @JsonIgnore
+    @OneToOne
     Probleme probleme;
 }

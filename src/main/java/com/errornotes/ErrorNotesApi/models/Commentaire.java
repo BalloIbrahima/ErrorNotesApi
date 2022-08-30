@@ -23,9 +23,11 @@ public class Commentaire {
     Long id;
     String description;
 
+    @JsonIgnore
     @ManyToOne
     User user;
 
+    @JsonIgnore
     @ManyToOne
     Solution solution;
 

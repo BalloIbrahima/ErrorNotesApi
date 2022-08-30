@@ -19,8 +19,10 @@ public class ErrorNotesApiApplication {
 		EtatRepository etatRepository = ctx.getBean(EtatRepository.class);
 		// Création des deux roles
 		Role role1 = new Role();
+		role1.setId((long) 1);
 		role1.setLibelle("USER");
 		Role role2 = new Role();
+		role2.setId((long) 2);
 		role2.setLibelle("ADMIN");
 
 		roleRepository.save(role1);
@@ -28,10 +30,13 @@ public class ErrorNotesApiApplication {
 
 		// Création des trois etats
 		Etat etat1 = new Etat();
+		etat1.setId((long) 1);
 		etat1.setLibelle("ENCOUR");
 		Etat etat2 = new Etat();
+		etat2.setId((long) 2);
 		etat2.setLibelle("RESOLU");
 		Etat etat3 = new Etat();
+		etat3.setId((long) 3);
 		etat3.setLibelle("FERME");
 
 		etatRepository.save(etat1);

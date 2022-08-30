@@ -23,9 +23,15 @@ public class CommentaireServiceImpl implements CommentaireService {
     }
 
     @Override
-    public Commentaire modificationCommentaire(Commentaire commentaire) {
+    public Object modificationCommentaire(Commentaire commentaire, Long id) {
         // TODO Auto-generated method stub
-        return repos.save(commentaire);
+        return repos.findById(id)
+                .map(p -> {
+                    p.setDescription(commentaire.getDescription());
+                    p.setSolution(commentaire.getSolution());
+                    p.setUser(commentaire.getUser());
+                    return repos.save(p);
+                }).orElseThrow(() -> new RuntimeException("User non trouvé !"));
     }
 
     @Override

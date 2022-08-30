@@ -14,7 +14,7 @@ public interface CommentaireService {
     Commentaire createCommentaire(Commentaire commentaire);
 
     // Modification d'un commentaire
-    Commentaire modificationCommentaire(Commentaire commentaire);
+    Object modificationCommentaire(Commentaire commentaire, Long id);
 
     // Supression d'un commentaire
     void deleteCommentaire(Commentaire commentaire);
