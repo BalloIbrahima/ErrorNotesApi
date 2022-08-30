@@ -14,7 +14,7 @@ public interface SolutionService {
     Solution createSolution(Solution solution);
 
     // Modification d'une solution
-    Solution modificationSolution(Solution solution);
+    Solution modificationSolution(Long id, Solution solution);
 
     // Supression d'une solution
     void deleteSolution(Solution solution);

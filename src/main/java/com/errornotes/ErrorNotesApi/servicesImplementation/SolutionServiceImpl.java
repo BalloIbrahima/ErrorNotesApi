@@ -2,6 +2,7 @@ package com.errornotes.ErrorNotesApi.servicesImplementation;
 
 import java.util.List;
 
+import com.errornotes.ErrorNotesApi.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,15 @@ public class SolutionServiceImpl implements SolutionService {
     }
 
     @Override
-    public Solution modificationSolution(Solution solution) {
-        // TODO Auto-generated method stub
-        return repos.save(solution);
+    public Solution modificationSolution(Long id, Solution solution) {
+        return repos.findById(id)
+                .map(p -> {
+                    p.setDescription(solution.getDescription());
+                    p.setRessources(solution.getRessources());
+                    p.setMethodologie(solution.getMethodologie());
+                    p.setTemps(solution.getTemps());
+                    return repos.save(p);
+                }).orElseThrow(() -> new RuntimeException("Solution non trouvé !"));
     }
 
     @Override

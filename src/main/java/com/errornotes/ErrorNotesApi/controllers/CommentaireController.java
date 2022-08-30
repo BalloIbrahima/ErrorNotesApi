@@ -1,5 +1,4 @@
 package com.errornotes.ErrorNotesApi.controllers;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/commentaire")
 public class CommentaireController {
-
     @Autowired
     CommentaireService commentaireService;
 
@@ -35,6 +33,7 @@ public class CommentaireController {
     @Autowired
     ProblemeService problemeService;
 
+    //La fonction de creation
     @ApiOperation(value = "Pour la création d'un commentaire")
     @PostMapping(value = "add/{idUser}/{idProblème}")
     public ResponseEntity<Object> AddCommentaire(@RequestBody Commentaire commentaire,
@@ -52,6 +51,26 @@ public class CommentaireController {
                     "Utilisateur ou problème inexistant !");
         }
 
+    }    
+    
+    //La fonction de modifier
+    @ApiOperation(value = "Pour la modifier d'un commentaire")
+    @PutMapping("/update/{idUser}/{idProbleme}/{idCommentaire}")
+    public Object update(Commentaire commentaire) {
+        return commentaireService.modificationCommentaire(commentaire);
     }
 
+    //La fonction de lister les commentaires
+    @ApiOperation(value = "Pour lister les commentaires")
+    public List<Commentaire> read(){
+        return commentaireService.getAllCommentaire();
+    }
+
+    //La fonction de suppression
+    @ApiOperation(value = "Pour supprimer les commentaires")
+    @DeleteMapping("/delete/{id}")
+    public void delete(Commentaire commentaire){
+        commentaireService.deleteCommentaire(commentaire);
+    }
+    
 }

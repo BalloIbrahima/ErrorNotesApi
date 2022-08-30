@@ -16,6 +16,8 @@ public interface RoleService {
     // fonction de modification de role
     Role ModifierRole(Long id, User user);
 
+    Role ModifierRole(Long id, Role role);
+
     // fonction de suppression de role
     String supprimerRole(Long id);
 
