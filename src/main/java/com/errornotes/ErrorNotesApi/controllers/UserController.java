@@ -51,19 +51,48 @@ public class UserController {
     }
 
     @ApiOperation(value = "Supression d'un utilisateur")
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable long id) {
-        return userService.supprimerUser(id);
+    @DeleteMapping("/delete/{idAdmin}/{idUser}")
+    public ResponseEntity<Object> delete(@PathVariable(value = "idAdmin") long idAdmin,
+            @PathVariable(value = "idUser") long idUser) {
+        User Admin = userService.RecupererParId(idAdmin);
+        User SimpleUser = userService.RecupererParId(idUser);
+
+        if (Admin != null) {
+            if (SimpleUser != null) {
+                userService.supprimerUser(idUser);
+                return ResponseMessage.generateResponse("ok", HttpStatus.OK, "Utilisateur suprimé!");
+            } else {
+                return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND, "Cet utilisateur n'existe pas");
+            }
+
+        } else {
+            return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND, "Cet administrateur n'existe pas");
+        }
     }
 
     @ApiOperation(value = "Recuperer la liste des utilisateurs simples")
-    @GetMapping("/readusers")
-    public List<User> read() {
-        // recuperation du role USER
-        Role role = roleService.getLibelleRole("USER");
+    @GetMapping("/readusers/{idAdmin}")
+    public ResponseEntity<Object> read(@PathVariable(value = "idAdmin") Long id) {
+        User user = userService.RecupererParId(id);
+        if (user != null) {
+            if (user.getRole() == roleService.getLibelleRole("ADMIN")) {
+                // recuperation du role USER
+                Role role = roleService.getLibelleRole("USER");
 
-        // recuperation des users avec ce role
-        return userService.recupererParRole(role);
+                // recuperation des users avec ce role
+                return ResponseMessage.generateResponse("ok", HttpStatus.OK, userService.recupererParRole(role));
+
+            } else {
+                return ResponseMessage.generateResponse("Vous n'etes pas autorisé a effectuer cette action!",
+                        HttpStatus.UNAUTHORIZED, "Non autorisé");
+
+            }
+
+        } else {
+            return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND, "Cet utilisateur n'existe pas!");
+
+        }
+
     }
 
     @ApiOperation(value = "Connexion d'un utilisateur ou d'un admin")

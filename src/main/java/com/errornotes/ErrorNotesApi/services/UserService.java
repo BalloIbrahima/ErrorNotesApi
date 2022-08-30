@@ -16,7 +16,7 @@ public interface UserService {
     User modifierUser(Long id, User user);
 
     // Fonction supprimer
-    String supprimerUser(long id);
+    void supprimerUser(long id);
 
     User getEmailUser(String eamil);
 

@@ -31,4 +31,6 @@ public class Probleme {
     @ManyToOne
     User user;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    Solution solution;
 }
