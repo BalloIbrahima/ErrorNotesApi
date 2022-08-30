@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Api(value = "user", description = "Pour la gestion des users")
 @RestController
 @RequestMapping("/user")
@@ -56,8 +54,9 @@ public class UserController {
             @PathVariable(value = "idUser") long idUser) {
         User Admin = userService.RecupererParId(idAdmin);
         User SimpleUser = userService.RecupererParId(idUser);
+        Role role = roleService.getLibelleRole("ADMIN");
 
-        if (Admin != null) {
+        if (Admin != null && Admin.getRole() == role) {
             if (SimpleUser != null) {
                 userService.supprimerUser(idUser);
                 return ResponseMessage.generateResponse("ok", HttpStatus.OK, "Utilisateur suprimé!");

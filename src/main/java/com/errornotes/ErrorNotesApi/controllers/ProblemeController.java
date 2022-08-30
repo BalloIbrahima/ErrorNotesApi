@@ -56,8 +56,8 @@ public class ProblemeController {
             Etat etat = etatService.retrouverParId(idEtat);
 
             // creation de la solution dans la bse de donné
-            Solution solution = solutionService.createSolution(probleme.getSolution());
-            probleme.setSolution(solution);
+            // Solution solution = solutionService.createSolution(probleme.getSolution());
+            // probleme.setSolution(solution);
             // etat.getProblemeList().add(probleme);
             probleme.setEtat(etat);
             probleme.setUser(user);
@@ -83,7 +83,7 @@ public class ProblemeController {
         }
     }
 
-    @ApiOperation(value = "Pour lsupression d'un problème")
+    @ApiOperation(value = "Pour la supression d'un problème")
     @DeleteMapping("/delete/{idUser}/{idProbleme}")
     public ResponseEntity<Object> delete(@PathVariable(value = "idUser") Long idUser,
             @PathVariable(value = "idProbleme") Long idProbleme) {
