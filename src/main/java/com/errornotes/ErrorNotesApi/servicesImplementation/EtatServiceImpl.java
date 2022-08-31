@@ -48,6 +48,12 @@ public class EtatServiceImpl implements EtatService {
     @Override
     public Etat retrouverParId(Long id) {
         // TODO Auto-generated method stub
-        return repos.findById(id).get();
+        try {
+            return repos.findById(id).get();
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
     }
 }

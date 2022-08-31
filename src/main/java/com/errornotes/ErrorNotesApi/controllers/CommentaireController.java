@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.errornotes.ErrorNotesApi.configuration.ResponseMessage;
 import com.errornotes.ErrorNotesApi.models.Commentaire;
+import com.errornotes.ErrorNotesApi.models.Probleme;
 import com.errornotes.ErrorNotesApi.models.Role;
 import com.errornotes.ErrorNotesApi.models.Solution;
 import com.errornotes.ErrorNotesApi.models.User;
@@ -18,6 +19,7 @@ import com.errornotes.ErrorNotesApi.services.RoleService;
 import com.errornotes.ErrorNotesApi.services.SolutionService;
 import com.errornotes.ErrorNotesApi.services.UserService;
 
+import ch.qos.logback.core.status.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -86,6 +88,21 @@ public class CommentaireController {
     @GetMapping("/getAll")
     public List<Commentaire> read() {
         return commentaireService.getAllCommentaire();
+    }
+
+    // Voir les commentaires associés à un problème
+    @ApiOperation(value = "Pour lister les commentaires associer à un proble")
+    @GetMapping("/get/{idProbleme}")
+    public ResponseEntity<Object> getCommentaire(@PathVariable Long idProbleme) {
+        Probleme p = problemeService.retrouverParId(idProbleme);
+        if (p != null) {
+            return ResponseMessage.generateResponse("Ok", HttpStatus.INTERNAL_SERVER_ERROR,
+                    solutionService.retrouverParProbleme(p).getCommentaireList());
+
+        } else {
+            return ResponseMessage.generateResponse("Erreur", HttpStatus.INTERNAL_SERVER_ERROR, null);
+        }
+
     }
 
     // La fonction de suppression

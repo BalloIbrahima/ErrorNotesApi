@@ -50,9 +50,16 @@ public class SolutionController {
         if (s == null) {
             if (probleme != null && user != null) {
                 if (probleme.getUser() == user || user.getRole() == admin) {
-                    solution.setProbleme(probleme);
-                    return ResponseMessage.generateResponse("ok", HttpStatus.OK,
-                            solutionService.createSolution(solution));
+                    if (solutionService.retrouverParProbleme(probleme) == null) {
+                        solution.setProbleme(probleme);
+                        return ResponseMessage.generateResponse("ok", HttpStatus.OK,
+                                solutionService.createSolution(solution));
+                    } else {
+                        return ResponseMessage.generateResponse("Erreur", HttpStatus.OK,
+                                "Cet probleme a déja une solution !");
+
+                    }
+
                 } else {
                     return ResponseMessage.generateResponse("Erreur", HttpStatus.UNAUTHORIZED,
                             "Impossible de modifier un problème qui ne vous appartient pas !");
@@ -70,9 +77,26 @@ public class SolutionController {
 
     // La fonction modification
     @ApiOperation(value = "Update Solution")
-    @PutMapping("/update/{id}")
-    public Solution update(@PathVariable Long id, @RequestBody Solution solution) {
-        return solutionService.modificationSolution(id, solution);
+    @PutMapping("/update/{idUser}/{idSolution}")
+    public ResponseEntity<Object> update(@PathVariable Long id, @PathVariable Long idUser,
+            @RequestBody Solution solution) {
+        Solution s = solutionService.retrouverParId(id);
+        User u = userService.RecupererParId(idUser);
+
+        if (u != null && s != null) {
+            if (s.getProbleme().getUser() == u) {
+                return ResponseMessage.generateResponse("ok", HttpStatus.OK,
+                        solutionService.modificationSolution(id, solution));
+            } else {
+                return ResponseMessage.generateResponse("Erreur", HttpStatus.OK,
+                        "Vous n'êtes pas le proprieteur de ce problème !");
+            }
+
+        } else {
+            return ResponseMessage.generateResponse("Erreur", HttpStatus.OK,
+                    "Problème ou solution inexistante");
+        }
+
     }
 
     // a fonction de suprression
@@ -109,6 +133,21 @@ public class SolutionController {
     @GetMapping("/read")
     public List<Solution> read() {
         return solutionService.getAllSolution();
+    }
+
+    // Voir la solution associé à un problème
+    @ApiOperation(value = "Voir la solution associé à un problème")
+    @GetMapping("/get/{idProbleme}")
+    public ResponseEntity<Object> getCommentaire(@PathVariable Long idProbleme) {
+        Probleme p = problemeService.retrouverParId(idProbleme);
+        if (p != null) {
+            return ResponseMessage.generateResponse("Ok", HttpStatus.OK,
+                    solutionService.retrouverParProbleme(p));
+
+        } else {
+            return ResponseMessage.generateResponse("Erreur", HttpStatus.INTERNAL_SERVER_ERROR, null);
+        }
+
     }
 
 }

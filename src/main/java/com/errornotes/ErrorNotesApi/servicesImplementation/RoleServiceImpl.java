@@ -53,6 +53,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleParId(Long id) {
         // TODO Auto-generated method stub
-        return roleRepository.findById(id).get();
+        try {
+            return roleRepository.findById(id).get();
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
     }
 }

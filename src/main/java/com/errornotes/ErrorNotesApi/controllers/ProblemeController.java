@@ -45,24 +45,11 @@ public class ProblemeController {
 
     @ApiOperation(value = "Pour la création d'un problème")
     @PostMapping("/create/{idUser}/{idEtat}")
-    public ResponseEntity<Object> create(@RequestBody Probleme probleme, @PathVariable(value = "idUser") Long idUser,
-            @PathVariable(value = "idEtat") Long idEtat) {
-/*
-            User user = userService.RecupererParId(idUser);
-            Etat etat = etatService.retrouverParId(idEtat);
-
-            if (user == null && etat == null){
-                probleme.setUser(user);
-                probleme.setEtat(etat);
-                return ResponseMessage.generateResponse("Ok", HttpStatus.OK, problemeService.createProbleme(probleme));
-            }else{
-                return ResponseMessage.generateResponse("Erreur", HttpStatus.UNAUTHORIZED,
-                        "Ce user n'existe pas!");
-            }*/
+    public ResponseEntity<Object> create(@RequestBody Probleme probleme, @PathVariable(value = "idUser") Long idUser) {
 
         try {
             User user = userService.RecupererParId(idUser);
-            Etat etat = etatService.retrouverParId(idEtat);
+            Etat etat = etatService.retrouverParLibelle("ENCOUR");
 
             // creation de la solution dans la bse de donné
             // Solution solution = solutionService.createSolution(probleme.getSolution());
@@ -92,35 +79,35 @@ public class ProblemeController {
         }
     }
 
-    //Modification de problème
+    // Modification de problème
     @ApiOperation(value = "La modification d'un problème")
     @PutMapping("/update/{idUser}/{idProbleme}")
     public ResponseEntity<Object> update(@RequestBody Probleme probleme, @PathVariable("idUser") Long idUser,
-                                         @PathVariable("idProbleme") Long idProbleme){
+            @PathVariable("idProbleme") Long idProbleme) {
         User user = userService.RecupererParId(idUser);
         Probleme p = problemeService.retrouverParId(idProbleme);
         Role admin = roleService.getLibelleRole("ADMIN");
 
-        if (user != null){
-            if (p != null){
-                if (probleme.getUser() == user || user.getRole() == admin){
-                    problemeService.modificationProbleme(idProbleme,probleme);
-                    return ResponseMessage.generateResponse("Ok", HttpStatus.OK, "Mise à jour du problème avec succes!");
-                }else {
+        if (user != null) {
+            if (p != null) {
+                if (probleme.getUser() == user || user.getRole() == admin) {
+                    problemeService.modificationProbleme(idProbleme, probleme);
+                    return ResponseMessage.generateResponse("Ok", HttpStatus.OK,
+                            "Mise à jour du problème avec succes!");
+                } else {
                     return ResponseMessage.generateResponse("Erreur", HttpStatus.UNAUTHORIZED,
                             "Vous avez pas le droit de modifier le problème!");
                 }
-            }else {
+            } else {
                 return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND,
                         "Le probleme n'existe pas!'");
             }
-        }else {
+        } else {
             return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND,
                     "Cet user n'existe pas");
         }
 
     }
-
 
     @ApiOperation(value = "Pour la supression d'un problème")
     @DeleteMapping("/delete/{idAdmin}/{idProbleme}")
@@ -159,10 +146,8 @@ public class ProblemeController {
 
     @ApiOperation(value = "Pour la voir les problèmes")
     @GetMapping("/read")
-    public List<Probleme> getAllProbleme(@RequestBody Probleme probleme){
+    public List<Probleme> getAllProbleme(@RequestBody Probleme probleme) {
         return problemeService.getAllProbleme();
     }
-
-
 
 }

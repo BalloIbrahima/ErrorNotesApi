@@ -21,8 +21,6 @@ public class ProblemeServiceImpl implements ProblemeService {
         return repos.save(probleme);
     }
 
-
-
     @Override
     public void deleteProbleme(Long idProbleme) {
         repos.deleteById(idProbleme);
@@ -41,12 +39,12 @@ public class ProblemeServiceImpl implements ProblemeService {
     }
 
     /*
-    @Override
-    public void deleteProbleme(Probleme probleme) {
-        // TODO Auto-generated method stub
-        repos.delete(probleme);
-    }
-*/
+     * @Override
+     * public void deleteProbleme(Probleme probleme) {
+     * // TODO Auto-generated method stub
+     * repos.delete(probleme);
+     * }
+     */
     @Override
     public List<Probleme> getAllProbleme() {
         // TODO Auto-generated method stub
@@ -62,12 +60,26 @@ public class ProblemeServiceImpl implements ProblemeService {
     @Override
     public Probleme retrouverParId(Long id) {
         // TODO Auto-generated method stub
-        return repos.findById(id).get();
+        try {
+            return repos.findById(id).get();
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
+
     }
 
     @Override
     public List<Probleme> recherche(String mot) {
         // TODO Auto-generated method stub
-        return repos.findByTitreContaining(mot);
+        List<Probleme> list = repos.findByTitreContaining(mot);
+
+        if (list != null) {
+            return list;
+        } else if (repos.findByDescriptionContaining(mot) != null) {
+            return repos.findByDescriptionContaining(mot);
+        } else {
+            return repos.findByTechnologiesContaining(mot);
+        }
     }
 }
