@@ -21,18 +21,32 @@ public class ProblemeServiceImpl implements ProblemeService {
         return repos.save(probleme);
     }
 
+
+
     @Override
-    public Probleme modificationProbleme(Probleme probleme) {
-        // TODO Auto-generated method stub
-        return repos.save(probleme);
+    public void deleteProbleme(Long idProbleme) {
+        repos.deleteById(idProbleme);
     }
 
+    @Override
+    public Probleme modificationProbleme(Long idProbleme, Probleme probleme) {
+        // TODO Auto-generated method stub
+        return repos.findById(idProbleme)
+                .map(p -> {
+                    p.setTitre(probleme.getTitre());
+                    p.setDescription(probleme.getDescription());
+                    p.setTechnologies(probleme.getTechnologies());
+                    return repos.save(p);
+                }).orElseThrow(() -> new RuntimeException("Solution non trouvé !"));
+    }
+
+    /*
     @Override
     public void deleteProbleme(Probleme probleme) {
         // TODO Auto-generated method stub
         repos.delete(probleme);
     }
-
+*/
     @Override
     public List<Probleme> getAllProbleme() {
         // TODO Auto-generated method stub

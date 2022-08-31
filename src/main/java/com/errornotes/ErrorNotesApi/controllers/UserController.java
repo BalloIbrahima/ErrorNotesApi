@@ -24,10 +24,11 @@ public class UserController {
     RoleService roleService;
 
     @ApiOperation(value = "Pour la création d'un user")
-    @PostMapping("/create/{idRole}")
-    public Object create(@RequestBody User user, @PathVariable("idRole") Long idRole) {
+    @PostMapping("/create/{idAdmin}")
+    public Object create(@RequestBody User user, @PathVariable("idAdmin") Long idAdmin) {
         User u = userService.getEmailUser(user.getEmail());
-        Role role = roleService.getRoleParId(idRole);
+        Role role = roleService.getRoleParId(idAdmin);
+
         if (u == null) {
             if (role != null) {
                 // role.getListUser().add(user);
@@ -37,15 +38,37 @@ public class UserController {
                 return "Vous essayez d'attribuez un role qui n'exsite pas!";
             }
         } else {
-            return "Cet utilisateur existe déja!!";
+            return "Cet utilisateur existe deja!!";
         }
 
     }
 
     @ApiOperation(value = "Mettre à jour un user")
-    @PutMapping("/update/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
-        return userService.modifierUser(id, user);
+    @PutMapping("/update/{idUser}")
+    public ResponseEntity<Object> update(@RequestBody User user, @PathVariable("idUser") Long idUser){
+
+        User user1 = userService.RecupererParId(idUser);
+        Role admin = roleService.getLibelleRole("ADMIN");
+
+        if (user1 != null){
+            userService.modifierUser(idUser, user);
+            return ResponseMessage.generateResponse("ok", HttpStatus.OK, "Mise à jour effectuer avec succes!");
+
+
+            /*
+            if (role != null){
+                    if(user.getRole() == role){
+                        userService.modifierUser(idUser, user);
+                        return ResponseMessage.generateResponse("ok", HttpStatus.OK, "Mise à jour effectuer avec succes!");
+                    }else {
+                        return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND, "Le role n'est pas ADMIN");
+                    }
+            }else {
+                return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND, "Le role n'existe pas!");
+            }*/
+        }else {
+            return ResponseMessage.generateResponse("Erreur", HttpStatus.NOT_FOUND, "Ce user n'existe pas!");
+        }
     }
 
     @ApiOperation(value = "Supression d'un utilisateur")
@@ -70,17 +93,17 @@ public class UserController {
     }
 
     @ApiOperation(value = "Recuperer la liste des utilisateurs simples")
-    @GetMapping("/readusers/{idAdmin}")
-    public ResponseEntity<Object> read(@PathVariable(value = "idAdmin") Long id) {
+    @GetMapping("/readusers/{idUser}")
+    public ResponseEntity<Object> read(@PathVariable(value = "idUser") Long id) {
         User user = userService.RecupererParId(id);
         if (user != null) {
             if (user.getRole() == roleService.getLibelleRole("ADMIN")) {
                 // recuperation du role USER
                 Role role = roleService.getLibelleRole("USER");
-
                 // recuperation des users avec ce role
                 return ResponseMessage.generateResponse("ok", HttpStatus.OK, userService.recupererParRole(role));
 
+                //return ResponseMessage.generateResponse("ok", HttpStatus.OK, userService.listerUser());
             } else {
                 return ResponseMessage.generateResponse("Vous n'etes pas autorisé a effectuer cette action!",
                         HttpStatus.UNAUTHORIZED, "Non autorisé");

@@ -49,7 +49,6 @@ public class SolutionController {
 
         if (s == null) {
             if (probleme != null && user != null) {
-
                 if (probleme.getUser() == user || user.getRole() == admin) {
                     solution.setProbleme(probleme);
                     return ResponseMessage.generateResponse("ok", HttpStatus.OK,
@@ -62,7 +61,6 @@ public class SolutionController {
             } else {
                 return ResponseMessage.generateResponse("ok", HttpStatus.OK,
                         "Vous essayez d'attribuez un probleme ou un utilisateur qui n'exsite pas !");
-
             }
         } else {
             return ResponseMessage.generateResponse("Erreur", HttpStatus.UNAUTHORIZED,

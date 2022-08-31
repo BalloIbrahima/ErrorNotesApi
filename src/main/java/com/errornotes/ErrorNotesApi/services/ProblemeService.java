@@ -13,10 +13,10 @@ public interface ProblemeService {
     Probleme createProbleme(Probleme probleme);
 
     // Modification d'un probleme
-    Probleme modificationProbleme(Probleme probleme);
+    Probleme modificationProbleme(Long idProbleme, Probleme probleme);
 
     // Supression d'un probleme
-    void deleteProbleme(Probleme probleme);
+    void deleteProbleme(Long idProbleme);
 
     // L'ensemble des problèmes
     List<Probleme> getAllProbleme();
