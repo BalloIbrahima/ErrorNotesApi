@@ -2,6 +2,7 @@ package com.errornotes.ErrorNotesApi.services;
 
 import java.util.List;
 
+import com.errornotes.ErrorNotesApi.models.Commentaire;
 import org.springframework.stereotype.Service;
 
 import com.errornotes.ErrorNotesApi.models.Probleme;

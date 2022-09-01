@@ -62,12 +62,12 @@ public class SolutionController {
 
                 } else {
                     return ResponseMessage.generateResponse("Erreur", HttpStatus.UNAUTHORIZED,
-                            "Impossible de modifier un problème qui ne vous appartient pas !");
+                            "Impossible de creer une solution à un problème qui ne vous appartient pas !");
                 }
 
             } else {
                 return ResponseMessage.generateResponse("ok", HttpStatus.OK,
-                        "Vous essayez d'attribuez un probleme ou un utilisateur qui n'exsite pas !");
+                        "Probleme ou utilisateur introuvable !");
             }
         } else {
             return ResponseMessage.generateResponse("Erreur", HttpStatus.UNAUTHORIZED,

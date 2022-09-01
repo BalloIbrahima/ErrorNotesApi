@@ -146,8 +146,8 @@ public class ProblemeController {
 
     @ApiOperation(value = "Pour la voir les problèmes")
     @GetMapping("/read")
-    public List<Probleme> getAllProbleme(@RequestBody Probleme probleme) {
-        return problemeService.getAllProbleme();
+    public ResponseEntity<Object> read() {
+        return ResponseMessage.generateResponse("Ok", HttpStatus.OK, problemeService.getAllProbleme());
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProblemeRepository extends JpaRepository<Probleme, Long> {
     Probleme findByTitre(String titre);
+    //List<Probleme> findByProbleme(Probleme probleme);
 
     @Query(value = "SELECT * FROM probleme WHERE probleme.titre LIKE %?1% ", nativeQuery = true)
     List<Probleme> recherche(String mot);

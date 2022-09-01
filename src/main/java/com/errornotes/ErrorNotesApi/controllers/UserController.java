@@ -112,15 +112,15 @@ public class UserController {
     }
 
     @ApiOperation(value = "Recuperer la liste des utilisateurs simples")
-    @GetMapping("/readusers/{idUser}")
-    public ResponseEntity<Object> read(@PathVariable(value = "idUser") Long id) {
+    @GetMapping("/readusers/{idAdmin}")
+    public ResponseEntity<Object> read(@PathVariable(value = "idAdmin") Long id) {
         User user = userService.RecupererParId(id);
         if (user != null) {
             if (user.getRole() == roleService.getLibelleRole("ADMIN")) {
                 // recuperation du role USER
                 Role role = roleService.getLibelleRole("USER");
                 // recuperation des users avec ce role
-                return ResponseMessage.generateResponse("ok", HttpStatus.OK, userService.recupererParRole(role));
+                return ResponseMessage.generateResponse("ok", HttpStatus.OK, role.getListUser());
 
                 // return ResponseMessage.generateResponse("ok", HttpStatus.OK,
                 // userService.listerUser());
