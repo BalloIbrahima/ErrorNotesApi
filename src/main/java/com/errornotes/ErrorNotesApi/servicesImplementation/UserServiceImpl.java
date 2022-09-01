@@ -59,8 +59,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User Login(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            if (passwordEncoder().matches(password, user.getPassword())) {
+                return user;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
         // TODO Auto-generated method stub
-        return userRepository.findByEmailAndPassword(email, passwordEncoder().encode(password));
+
     }
 
     @Override
