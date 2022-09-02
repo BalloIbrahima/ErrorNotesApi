@@ -10,7 +10,6 @@ import com.errornotes.ErrorNotesApi.configuration.ResponseMessage;
 import com.errornotes.ErrorNotesApi.models.Etat;
 import com.errornotes.ErrorNotesApi.models.Probleme;
 import com.errornotes.ErrorNotesApi.models.Role;
-import com.errornotes.ErrorNotesApi.models.Solution;
 import com.errornotes.ErrorNotesApi.models.User;
 import com.errornotes.ErrorNotesApi.services.EtatService;
 import com.errornotes.ErrorNotesApi.services.ProblemeService;

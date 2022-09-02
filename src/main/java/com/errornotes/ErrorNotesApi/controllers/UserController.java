@@ -64,7 +64,6 @@ public class UserController {
     public ResponseEntity<Object> update(@RequestBody User user, @PathVariable("idUser") Long idUser) {
 
         User user1 = userService.RecupererParId(idUser);
-        Role admin = roleService.getLibelleRole("ADMIN");
 
         if (user1 != null) {
             userService.modifierUser(idUser, user);
@@ -112,8 +111,8 @@ public class UserController {
     }
 
     @ApiOperation(value = "Recuperer la liste des utilisateurs simples")
-    @GetMapping("/readusers/{idUser}")
-    public ResponseEntity<Object> read(@PathVariable(value = "idUser") Long id) {
+    @GetMapping("/readusers/{idAdmin}")
+    public ResponseEntity<Object> read(@PathVariable(value = "idAdmin") Long id) {
         User user = userService.RecupererParId(id);
         if (user != null) {
             if (user.getRole() == roleService.getLibelleRole("ADMIN")) {

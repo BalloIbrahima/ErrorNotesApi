@@ -2,7 +2,6 @@ package com.errornotes.ErrorNotesApi.servicesImplementation;
 
 import java.util.List;
 
-import com.errornotes.ErrorNotesApi.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

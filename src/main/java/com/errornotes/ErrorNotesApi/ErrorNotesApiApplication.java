@@ -34,13 +34,13 @@ public class ErrorNotesApiApplication {
 
 		// Création des trois etats
 		Etat etat1 = new Etat();
-		etat1.setId((long) 1);
+		etat1.setId(1L);
 		etat1.setLibelle("ENCOUR");
 		Etat etat2 = new Etat();
-		etat2.setId((long) 2);
+		etat2.setId(2L);
 		etat2.setLibelle("RESOLU");
 		Etat etat3 = new Etat();
-		etat3.setId((long) 3);
+		etat3.setId(3L);
 		etat3.setLibelle("FERME");
 
 		etatRepository.save(etat1);
@@ -50,7 +50,7 @@ public class ErrorNotesApiApplication {
 		// créattion d'un administrateur
 		User ballo = new User();
 		ballo.setEmail("ibrahimaballo01@gmail.com");
-		ballo.setId((long) 1);
+		ballo.setId(1L);
 		ballo.setNom("BALLO");
 		ballo.setPrenom("Ibrahima");
 		ballo.setNumero((long) 77786028);
@@ -59,7 +59,7 @@ public class ErrorNotesApiApplication {
 
 		User mary = new User();
 		mary.setEmail("mary@gmail.com");
-		mary.setId((long) 2);
+		mary.setId(2L);
 		mary.setNom("Traore");
 		ballo.setPrenom("Mary");
 		mary.setNumero((long) 77667766);

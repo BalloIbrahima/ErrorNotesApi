@@ -19,7 +19,6 @@ import com.errornotes.ErrorNotesApi.services.RoleService;
 import com.errornotes.ErrorNotesApi.services.SolutionService;
 import com.errornotes.ErrorNotesApi.services.UserService;
 
-import ch.qos.logback.core.status.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -50,7 +49,6 @@ public class CommentaireController {
         // TODO: process POST request
         User user = userService.RecupererParId(idUser);
         Solution solution = solutionService.retrouverParId(idSolution);
-        Role admin = roleService.getLibelleRole("ADMIN");
 
         if (user != null && solution != null) {
             commentaire.setUser(user);
