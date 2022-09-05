@@ -16,4 +16,9 @@ public interface ProblemeRepository extends JpaRepository<Probleme, Long> {
     List<Probleme> recherche(String mot);
 
     List<Probleme> findByTitreContaining(String mot);
+
+    List<Probleme> findByDescriptionContaining(String mot);
+
+    List<Probleme> findByTechnologiesContaining(String mot);
+
 }

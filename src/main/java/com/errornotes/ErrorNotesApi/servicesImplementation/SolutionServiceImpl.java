@@ -2,7 +2,6 @@ package com.errornotes.ErrorNotesApi.servicesImplementation;
 
 import java.util.List;
 
-import com.errornotes.ErrorNotesApi.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +55,12 @@ public class SolutionServiceImpl implements SolutionService {
     @Override
     public Solution retrouverParId(Long id) {
         // TODO Auto-generated method stub
-        return repos.findById(id).get();
+        try {
+            return repos.findById(id).get();
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
     }
 }
